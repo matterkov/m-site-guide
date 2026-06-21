@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧博 · 日常查询与对照</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f9fc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e2b3a;
+            line-height: 1.7;
+            padding: 2rem 1.2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 首页横幅 hero */
+        .hero {
+            background: linear-gradient(145deg, #e0f0ec 0%, #c6e2da 100%);
+            border-radius: 2.5rem;
+            padding: 3rem 2rem 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 20px rgba(60, 110, 100, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(70, 130, 120, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #1a3a3a;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            max-width: 640px;
+            color: #2b4d4d;
+            position: relative;
+            z-index: 1;
+            margin-top: 0.3rem;
+        }
+
+        .hero .meta-tag {
+            display: inline-block;
+            background: rgba(50, 100, 95, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2b5e5a;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 背景说明卡片 */
+        .context-card {
+            background: #ffffff;
+            border-left: 5px solid #3f8a82;
+            border-radius: 1.5rem;
+            padding: 2rem 2rem 2rem 2.2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 14px rgba(50, 100, 95, 0.06);
+        }
+
+        .context-card h2 {
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: #20554e;
+            margin-bottom: 0.8rem;
+        }
+
+        .context-card p {
+            color: #2d4040;
+            max-width: 780px;
+        }
+
+        /* 网格卡片区 — 三段自然介绍 */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 2.8rem 0 2.8rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 1.8rem;
+            padding: 2rem 1.6rem 1.8rem;
+            box-shadow: 0 6px 16px rgba(40, 90, 80, 0.05);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(80, 150, 140, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(50, 110, 100, 0.08);
+            border-color: rgba(60, 140, 130, 0.25);
+        }
+
+        .card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            background: #dcf0ec;
+            width: 48px;
+            height: 48px;
+            line-height: 48px;
+            text-align: center;
+            border-radius: 30px;
+            color: #20665d;
+        }
+
+        .card h3 {
+            font-weight: 500;
+            font-size: 1.3rem;
+            margin: 0.6rem 0 0.5rem;
+            color: #1a4a44;
+        }
+
+        .card p {
+            color: #304a48;
+            font-size: 0.98rem;
+        }
+
+        .card .extra {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #2b7a70;
+            text-decoration: none;
+            border-bottom: 1px dotted #6fb4ab;
+            font-size: 0.9rem;
+        }
+
+        /* 页尾访问提示 */
+        .footer-note {
+            background: #e6f3ef;
+            border-radius: 2rem;
+            padding: 2rem 2rem 1.8rem;
+            margin-top: 3.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .footer-note p {
+            max-width: 600px;
+            color: #1f4c47;
+            font-size: 1rem;
+        }
+
+        .footer-note .link-holder {
+            background: #ffffff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .footer-note a {
+            color: #16685e;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #6bb2a8;
+            padding-bottom: 1px;
+        }
+
+        .footer-note a:hover {
+            color: #0b4f47;
+            border-bottom-color: #0b4f47;
+        }
+
+        /* FAQ 摘要 (简洁) */
+        .faq-mini {
+            margin-top: 2.5rem;
+            background: #f0f7f5;
+            padding: 1.8rem 2rem;
+            border-radius: 2rem;
+        }
+
+        .faq-mini h4 {
+            font-weight: 500;
+            color: #1a5c55;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #cfe3de;
+            padding-bottom: 0.6rem;
+        }
+
+        .faq-mini summary {
+            cursor: pointer;
+            color: #1b4d47;
+            font-weight: 450;
+            padding: 0.2rem 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-mini summary::before {
+            content: '▹';
+            margin-right: 0.5rem;
+            color: #3f9489;
+        }
+
+        .faq-mini details p {
+            margin-top: 0.5rem;
+            color: #2f5550;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .grid-cards {
+                gap: 1.2rem;
+            }
+
+            .footer-note {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-note .link-holder {
+                white-space: normal;
+            }
+
+            .faq-mini {
+                padding: 1.2rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .context-card h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #dae9e4;
+            margin: 2.5rem 0 0.5rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 首页横幅 -->
+    <section class="hero">
+        <span class="meta-tag">⏺ 日常存档 · 对照阅读</span>
+        <h1>欧博 · 延伸的笔记</h1>
+        <p>一条查询线索，一种理解方式——从页面到文本，慢慢汇成可参照的脉络。</p>
+    </section>
+
+    <!-- 背景说明 -->
+    <div class="context-card">
+        <h2>为什么是「欧博」</h2>
+        <p>在信息碎片里，我们常常需要一处安静落定的地方，不必追赶，只是停下来比对几行字、回想一段上下文。<strong>欧博</strong> 所代表的并非某个单向入口，而更像一个开放的坐标：日常中检索，对照中延伸。无论是快速定位一个表述，还是耐心梳理几层意思，这个站点提供的是持续的、可反复翻阅的素材。</p>
+    </div>
+
+    <!-- 网格卡片：三段自然介绍 -->
+    <div class="grid-cards">
+        <div class="card">
+            <div class="icon">📋</div>
+            <h3>日常查询</h3>
+            <p>不必每次从头开始。遇到模糊的概念、不确定的说法，可以在这里走一遍对照流程。不是词典，却像一位安静的参考伙伴。</p>
+            <span class="extra">积累一些条目</span>
+        </div>
+        <div class="card">
+            <div class="icon">🔍</div>
+            <h3>对照阅读</h3>
+            <p>同样一个话题，不同段落会有细微差异。并排看、反复读，往往比单一解释更有层次。欧博鼓励这种缓慢的对照习惯。</p>
+            <span class="extra">并列与差异</span>
+        </div>
+        <div class="card">
+            <div class="icon">🌱</div>
+            <h3>延伸触角</h3>
+            <p>一条笔记牵引出另一条，一个页面带出新的线索。不需要宏大结构，只需保持开放，让延伸自然发生。这也是保持思考的方式。</p>
+            <span class="extra">继续往前走</span>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 (非正式，但呼应杂志专题感) -->
+    <div class="faq-mini">
+        <h4>📎 一些常见疑问摘要</h4>
+        <details>
+            <summary>这个页面会频繁更新吗？</summary>
+            <p>更倾向于缓慢、持续的补充，并非每日刷新。你可以隔一段时间回来看，会发现新的对照片段。</p>
+        </details>
+        <details>
+            <summary>可以直接引用这里的段落吗？</summary>
+            <p>当然。这些文字本身就是供参考与延伸的，引用时注明出处即可。保持分享的开放性。</p>
+        </details>
+        <details>
+            <summary>欧博与一般导航站有什么不同？</summary>
+            <p>更侧重于内容的可读性与串联感，每一页都试图提供独立且完整的阅读节奏，而不是堆砌链接。</p>
+        </details>
+    </div>
+
+    <!-- 页尾访问提示，自然嵌入 a 标签 -->
+    <div class="footer-note">
+        <p>
+            如果你愿意持续翻阅这些记录与对照，不妨把 <a href="https://m-site-oubo.com">欧博</a> 放在书签里。它像一条安静的长廊，任何时候推门进来，都有一两段文字等着被重新打量。
+        </p>
+        <span class="link-holder">📖 保持阅读</span>
+    </div>
+
+    <hr />
+    <p style="color: #4c6d68; font-size: 0.85rem; text-align: center; margin-top: 1.2rem; opacity: 0.7;">
+        杂志专题 · 日常查询 / 对照 / 延伸
+    </p>
+
+</body>
+</html>
