@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>爱游戏 · 信息卡片介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f4f7;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+        }
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 主视觉 —— 温和留白，弱化标题 */
+        .hero {
+            background: white;
+            border-radius: 32px;
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid #e9ecf0;
+            transition: box-shadow 0.2s ease;
+        }
+        .hero:hover {
+            box-shadow: 0 12px 24px rgba(0,20,30,0.06);
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            color: #1a2634;
+            border-left: 6px solid #7f8fa6;
+            padding-left: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .hero .lead {
+            font-size: 1.2rem;
+            color: #4a5a6e;
+            max-width: 700px;
+            margin-top: 0.5rem;
+        }
+        .hero .tagline {
+            display: inline-block;
+            background: #eef1f5;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #3d4e62;
+            margin-top: 1.2rem;
+            border: 1px solid #dce1e8;
+        }
+
+        /* 双列卡片网格 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+        @media (max-width: 700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.8rem 2rem 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #e6eaef;
+            transition: all 0.2s ease;
+        }
+        .card:hover {
+            border-color: #ced6de;
+            box-shadow: 0 8px 18px rgba(0, 20, 30, 0.06);
+            transform: translateY(-2px);
+        }
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 450;
+            color: #1f2b38;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eef2f6;
+        }
+        .card p {
+            margin-bottom: 0.85rem;
+            font-size: 1rem;
+            color: #3b4b5d;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .card ul li {
+            margin-bottom: 0.6rem;
+            padding-left: 1.4rem;
+            position: relative;
+        }
+        .card ul li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #7f8fa6;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: #f9fafc;
+            border-radius: 16px;
+            padding: 1rem 1.4rem;
+            margin: 1rem 0 0.2rem;
+            border-left: 4px solid #b0bec5;
+        }
+
+        /* 适合人群卡片——特殊样式 */
+        .card.audience {
+            background: #ffffff;
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 0.8rem;
+            margin: 1.2rem 0 0.4rem;
+        }
+        .tag {
+            background: #edf1f6;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #2f4051;
+            border: 1px solid #dce1e8;
+        }
+        .tag.alt {
+            background: white;
+            border: 1px solid #cbd3dd;
+        }
+
+        /* 自然链接段落卡片 —— 独立展示 */
+        .link-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e6eaef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.4rem 0.2rem;
+        }
+        .link-card p {
+            font-size: 1.1rem;
+            color: #2b3c4e;
+            margin: 0;
+            flex: 1 1 80%;
+        }
+        .link-card .suffix {
+            flex: 0 0 auto;
+            font-size: 0.95rem;
+            color: #5b6f84;
+        }
+
+        /* FAQ 摘要 */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem 2rem;
+            margin: 0.5rem 0 0.2rem;
+        }
+        @media (max-width: 640px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .faq-item {
+            border-bottom: 1px solid #e8ecf1;
+            padding: 0.5rem 0 0.9rem;
+        }
+        .faq-item strong {
+            display: block;
+            font-weight: 500;
+            color: #1f2b39;
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        .faq-item span {
+            color: #4b5f73;
+            font-size: 0.95rem;
+        }
+
+        /* 自然嵌入链接样式 */
+        a {
+            color: #2b4b6a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+        a:hover {
+            border-bottom-color: #2b4b6a;
+        }
+
+        .footnote {
+            text-align: center;
+            padding: 1.8rem 0 0.8rem;
+            color: #6c7e91;
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e7ed;
+            margin-top: 1rem;
+        }
+        .footnote a {
+            font-weight: 450;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero 主视觉 -->
+    <div class="hero">
+        <h1>爱游戏 · 不止于玩</h1>
+        <div class="lead">从轻量小憩到深度沉浸，每个兴趣都值得被认真对待。这里是一份关于游戏生活方式的温和提案。</div>
+        <div class="tagline"># 休闲 · 探索 · 联结</div>
+    </div>
+
+    <!-- 双列卡片：用途 + 适合人群 -->
+    <div class="grid-2">
+
+        <!-- 用途卡片 -->
+        <div class="card">
+            <h2>📋 日常场景</h2>
+            <p>游戏可以出现在意想不到的角落，为生活增添节奏和色彩。无论是通勤路上、午休间隙，还是周末放松，每个人都能找到适合自己的方式。</p>
+            <div class="highlight">
+                <ul>
+                    <li><strong>短时解压</strong> —— 五到十分钟，一局轻巧的思维游戏或反应挑战</li>
+                    <li><strong>社交暖场</strong> —— 与朋友一起合作、竞猜，或者重温经典关卡</li>
+                    <li><strong>创意触发</strong> —— 沉浸式故事或解谜，带来新的灵感角度</li>
+                    <li><strong>睡前放松</strong> —— 低刺激、慢节奏的建造或模拟，平静收尾</li>
+                </ul>
+            </div>
+            <p style="margin-top: 0.8rem;">无论你是独处还是结伴，不同的节奏都能融入日常。真正的乐趣是贴合你状态的那一种。</p>
+        </div>
+
+        <!-- 适合人群卡片 -->
+        <div class="card audience">
+            <h2>🧩 谁在靠近</h2>
+            <p>游戏从来不是某个群体的专属，我们看见很多种面貌——</p>
+            <div class="tag-group">
+                <span class="tag">上班族</span>
+                <span class="tag alt">学生党</span>
+                <span class="tag">自由职业</span>
+                <span class="tag alt">家长&孩子</span>
+                <span class="tag">退休玩家</span>
+                <span class="tag alt">创意思考者</span>
+                <span class="tag">休闲派</span>
+            </div>
+            <p style="margin-top: 1rem;">年龄、职业、经验都不是门槛。重要的是愿意花一点时间，在互动中找到属于自己的节奏。<br>🌱 新手友好，老手也能发现新视角。</p>
+            <div style="margin-top: 0.6rem; font-size: 0.95rem; color: #48627a;">
+                ⚬ 偏好轻量体验？ ⚬ 喜欢挑战脑力？ ⚬ 更看重故事与氛围？
+            </div>
+        </div>
+    </div>
+
+    <!-- 自然链接段落卡片 （包含严格要求的a标签）-->
+    <div class="link-card">
+        <p>
+            如果你想找一个自在、不喧闹的线上空间，不妨从 <a href="https://cn-online-igame.com">爱游戏</a> 开始探索。
+            它像是藏在网络角落的一扇小门，没有冗余的推送，只有干净的游戏选择和安静的体验氛围。
+        </p>
+        <span class="suffix">—— 安静地来，尽兴地走。</span>
+    </div>
+
+    <!-- 第三张卡片：特点 + FAQ摘要（二合一） -->
+    <div class="card" style="margin-bottom: 2.5rem;">
+        <h2>⚙️ 一些特点 & 常见疑问</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.2rem 2rem; margin-bottom: 0.4rem;">
+            <div style="flex: 1; min-width: 200px;">
+                <p><strong>🎯 克制 · 不打扰</strong><br>没有弹窗与排行榜焦虑，专注于玩法本身。</p>
+                <p><strong>🌐 轻量 · 即开即用</strong><br>无需下载，浏览器打开即可进入，对设备和网络都很友好。</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <p><strong>🧘 节奏自由</strong><br>不设强制任务，随时暂停，随时继续。</p>
+                <p><strong>🔁 定期更新</strong><br>保持新鲜感的同时，保留经典常驻内容。</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 1rem; border-top: 1px solid #eef1f5; padding-top: 1.2rem;">
+            <h3 style="font-weight: 450; font-size: 1.2rem; margin-bottom: 0.6rem;">❓ 你可能还想了解</h3>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <strong>需要注册吗？</strong>
+                    <span>大部分内容直接可用，部分个性化功能可选记录偏好，非强制。</span>
+                </div>
+                <div class="faq-item">
+                    <strong>有年龄限制吗？</strong>
+                    <span>内容以全年龄向为主，不含激烈对抗或成人元素，青少年和成年人都适合。</span>
+                </div>
+                <div class="faq-item">
+                    <strong>移动设备体验如何？</strong>
+                    <span>响应式适配良好，手机与平板均可流畅操作，横竖屏都友好。</span>
+                </div>
+                <div class="faq-item">
+                    <strong>更新频率？</strong>
+                    <span>保持每月新增玩法或主题内容，同时修复反馈细节。</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结尾：温和收束 -->
+    <div class="footnote">
+        <span>当你想起游戏时，这里有一份不拥挤的选择。</span><br>
+        <span style="font-size: 0.85rem;">—— 由 <a href="https://cn-online-igame.com" style="font-weight: 450;">爱游戏</a> 表达一种态度 · 安静陪伴</span>
+    </div>
+
+</div>
+</body>
+</html>
